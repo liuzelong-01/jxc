@@ -1,0 +1,41 @@
+server:
+  port: 8989
+  servlet:
+    context-path: /
+
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db_jxc?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    hikari:
+      pool-name: DataHikariCP
+      minimum-idle: 5
+      idle-timeout: 180000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  freemarker:
+    suffix: .ftl
+    content-type: text/html
+    charset: UTF-8
+    template-loader-path: classpath:/views/
+    request-context-attribute: ctx
+    settings:
+      number_format: 0.##
+
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  type-aliases-package: org.example.admin.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    org.example.admin.mapper: debug
