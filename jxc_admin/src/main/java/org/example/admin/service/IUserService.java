@@ -12,13 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-11-07
  */
 public interface IUserService extends IService<User> {
-    /**
-     * 用户登录方法
-     * @param userName
-     * @param password
-     * @return
-     */
-    User login(String userName,String password);
 
     /**
      * 根据用户名查询用户记录

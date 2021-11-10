@@ -5,6 +5,7 @@ import org.example.admin.exceptions.ParamsException;
 import org.example.admin.model.RespBean;
 import org.example.admin.pojo.User;
 import org.example.admin.service.IUserService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 /**
  * <p>
@@ -27,13 +29,7 @@ public class UserController {
     @Resource
     private IUserService userService;
 
-@RequestMapping("login")
-    @ResponseBody
-    public RespBean login(String userName, String password, HttpSession session) {
-        User user = userService.login(userName, password);
-        session.setAttribute("user", user);
-        return RespBean.success("用户登录成功");
-    }
+
 
     /**
      * 用户信息设置页面
@@ -41,9 +37,9 @@ public class UserController {
      * @return
      */
     @RequestMapping("setting")
-    public String setting(HttpSession session){
-        User user=(User)session.getAttribute("user");
-        session.setAttribute("user",userService.getById(user.getId()));
+    public String setting(Principal principal, Model model){
+        User user = userService.findUserByUserName(principal.getName());
+        model.addAttribute("user",user);
         return "user/setting";
     }
 
@@ -61,10 +57,11 @@ public class UserController {
 
     @RequestMapping("updateUserPassword")
     @ResponseBody
-    public RespBean updateUserPassword(HttpSession session,String oldPassword,String newPassword,String confirmPassword){
-            User user=(User) session.getAttribute("user");
-            userService.updateUserPassword(user.getUserName(),oldPassword,newPassword,confirmPassword);
+    public RespBean updateUserPassword(Principal principal, String oldPassword, String newPassword, String confirmPassword){
+
+            userService.updateUserPassword(principal.getName(),oldPassword,newPassword,confirmPassword);
             return RespBean.success("用户密码更新成功！");
+
     }
 
 

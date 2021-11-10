@@ -22,7 +22,7 @@
                 <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
             </li>
             <li class="layui-nav-item layuimini-setting">
-                <a href="javascript:;">${(user.userName)!}</a>
+                <a href="javascript:;">${(Session.SPRING_SECURITY_CONTEXT.authentication.principal.username)!'lzl'}</a>
                 <dl class="layui-nav-child">
                     <dd>
                         <a href="javascript:;" data-iframe-tab="${ctx.contextPath}/user/setting" data-title="基本资料" data-icon="fa fa-gears">基本资料</a>

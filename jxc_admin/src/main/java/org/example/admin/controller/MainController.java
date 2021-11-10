@@ -23,10 +23,6 @@ public class MainController {
         return "welcome";
     }
 
-    @RequestMapping("signout")
-    public String signout(HttpSession session){
-        session.removeAttribute("user");
-        return "redirect:index";
-    }
+
 
 }
