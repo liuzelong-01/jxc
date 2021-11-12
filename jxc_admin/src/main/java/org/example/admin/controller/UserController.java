@@ -4,6 +4,7 @@ package org.example.admin.controller;
 import org.example.admin.exceptions.ParamsException;
 import org.example.admin.model.RespBean;
 import org.example.admin.pojo.User;
+import org.example.admin.query.UserQuery;
 import org.example.admin.service.IUserService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.Map;
 
 /**
  * <p>
@@ -65,6 +67,45 @@ public class UserController {
     }
 
 
+    @RequestMapping("index")
+    public String index(){
+        return "user/user";
+    }
+    @RequestMapping("list")
+    @ResponseBody
+    public Map<String,Object> userList(UserQuery userQuery){
+        return userService.userList(userQuery);
+    }
+
+    @RequestMapping("addOrUpdateUserPage")
+    public String addOrUpdatePage(Integer id,Model model){
+        if (null!=id){
+            model.addAttribute("user",userService.getById(id));
+        }
+        return "user/add_update";
+    }
+
+    @RequestMapping("/save")
+    @ResponseBody
+    public RespBean saveUser(User user){
+        userService.saveUser(user);
+        return RespBean.success("用户记录添加成功");
+    }
+
+    @RequestMapping("/update")
+    @ResponseBody
+    public RespBean updateUser(User user){
+        userService.updateUser(user);
+        return RespBean.success("用户记录更新成功");
+    }
+
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public RespBean deleteUser(Integer[] ids ){
+        userService.deleteUser(ids);
+        return RespBean.success("用户记录删除成功！");
+    }
 
 
 }

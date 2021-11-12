@@ -11,7 +11,7 @@ layui.use(['form','layuimini'], function () {
             data:data.field,
             dataType:"json",
             success:function (data) {
-              layer.msg(data.message);
+                layer.msg(data.message);
             }
         });
         return false;

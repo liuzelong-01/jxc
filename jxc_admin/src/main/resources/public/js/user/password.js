@@ -17,9 +17,10 @@ layui.use(['form','layuimini','jquery','jquery_cookie'], function () {
             dataType:"json",
             success:function (data) {
                 if(data.code==200){
-                    layer.msg("密码修改成功,系统将在5秒后自动退出...", function () {
+                    layer.msg("密码修改成功,系统将在3秒后自动退出...", function () {
+                        $.removeCookie("remember-me-cookie");
                         setTimeout(function () {
-                            window.parent.location.href=ctx+"/signout";
+                            window.parent.location.href=ctx+"/index";
                         },3000);
                     });
                 }else{
