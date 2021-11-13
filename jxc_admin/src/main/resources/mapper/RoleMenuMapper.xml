@@ -14,4 +14,30 @@
         id, menu_id, role_id
     </sql>
 
+
+    <select id="queryRoleHasAllMenusByRoleId" resultType="java.lang.Integer">
+        SELECT
+            menu_id
+        FROM
+            t_role_menu
+        WHERE
+            role_id = #{roleId}
+    </select>
+
+    <select id="findAuthoritiesByRoleName" resultType="java.lang.String">
+        SELECT DISTINCT
+            m.acl_value
+        FROM
+            t_role_menu AS rm
+                LEFT JOIN t_menu AS m ON rm.menu_id = m.id
+                LEFT JOIN t_role AS r ON rm.role_id = r.id
+        WHERE
+            m.is_del = 0
+          AND r.`name` IN
+            <foreach collection="list" item="roleName" open="(" separator="," close=")">
+                #{roleName}
+            </foreach>
+    </select>
+
+
 </mapper>

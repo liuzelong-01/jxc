@@ -3,6 +3,8 @@ package org.example.admin.service;
 import org.example.admin.pojo.RoleMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色菜单表 服务类
@@ -13,4 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IRoleMenuService extends IService<RoleMenu> {
 
+    List<Integer> queryRoleHasAllMenusByRoleId(Integer roleId);
+
+    List<String> findAuthoritiesByRoleName(List<String> roleNames);
 }

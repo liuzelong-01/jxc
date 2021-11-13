@@ -28,8 +28,8 @@ public class MenuController {
 
     @RequestMapping("queryAllMenus")
     @ResponseBody
-    public List<TreeDto> queryAllMenus(){
-        return menuService.queryAllMenus();
+    public List<TreeDto> queryAllMenus(Integer roleId){
+        return menuService.queryAllMenus(roleId);
     }
 
 }

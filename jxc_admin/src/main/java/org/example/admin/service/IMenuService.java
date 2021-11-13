@@ -16,5 +16,5 @@ import java.util.List;
  */
 public interface IMenuService extends IService<Menu> {
 
-    List<TreeDto> queryAllMenus();
+    List<TreeDto> queryAllMenus(Integer roleId);
 }

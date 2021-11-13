@@ -14,4 +14,16 @@
         id, role_id, user_id
     </sql>
 
+    <select id="findRolesByUserName"  parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+            r.`name`
+        FROM
+            t_user_role AS ur
+                LEFT JOIN t_user AS u ON ur.user_id = u.id
+                LEFT JOIN t_role AS r ON ur.role_id = r.id
+        WHERE
+            r.is_del = 0
+          AND u.user_name = #{userName}
+    </select>
+
 </mapper>

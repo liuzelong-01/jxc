@@ -3,6 +3,8 @@ package org.example.admin.mapper;
 import org.example.admin.pojo.RoleMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色菜单表 Mapper 接口
@@ -13,4 +15,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
 
+    List<Integer> queryRoleHasAllMenusByRoleId(Integer roleId);
+
+    List<String> findAuthoritiesByRoleName(List<String> roleNames);
 }
