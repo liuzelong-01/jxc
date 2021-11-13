@@ -29,4 +29,6 @@ public interface IRoleService extends IService<Role> {
     void deleteRole(Integer id);
 
     List<Map<String, Object>> queryAllRoles(Integer userId);
+
+    void addGrant(Integer roleId, Integer[] mids);
 }
