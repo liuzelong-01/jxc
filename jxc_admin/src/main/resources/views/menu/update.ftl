@@ -46,7 +46,7 @@
     <!--
        添加根级菜单
     -->
-    <input name="pId" type="hidden" value="${menu.pId}"/>
+    <input name="pId" type="hidden" value="${menu.PId}"/>
     <input name="id" type="hidden" value="${menu.id}"/>
     <br/>
     <div class="layui-form-item layui-row layui-col-xs12">
