@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
 import org.example.admin.pojo.Customer;
 import org.example.admin.mapper.CustomerMapper;
-import org.example.admin.pojo.Supplier;
 import org.example.admin.query.CustomerQuery;
 import org.example.admin.service.ICustomerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -47,19 +46,19 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void saveCustomer(Customer customer) {
         checkParams(customer.getName(),customer.getContact(),customer.getNumber());
-        AssertUtils.isTure(null!=this.findCustomerByName(customer.getName()),"客户已存在！");
+        AssertUtils.isTrue(null!=this.findCustomerByName(customer.getName()),"客户已存在！");
         customer.setIsDel(0);
-        AssertUtils.isTure(!(this.save(customer)),"客户记录添加失败！");
+        AssertUtils.isTrue(!(this.save(customer)),"客户记录添加失败！");
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void updateCustomer(Customer customer) {
-        AssertUtils.isTure(null==this.getById( customer.getId()),"请选择客户记录！");
+        AssertUtils.isTrue(null==this.getById( customer.getId()),"请选择客户记录！");
         checkParams( customer.getName(), customer.getContact(), customer.getNumber());
         Customer temp=this.findCustomerByName( customer.getName());
-        AssertUtils.isTure(null!=temp&&!(temp.getId().equals( customer.getId())),"客户已存在！");
-        AssertUtils.isTure(!(this.updateById( customer)),"客户记录更新失败！");
+        AssertUtils.isTrue(null!=temp&&!(temp.getId().equals( customer.getId())),"客户已存在！");
+        AssertUtils.isTrue(!(this.updateById( customer)),"客户记录更新失败！");
     }
 
     @Override
@@ -70,7 +69,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     @Override
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void deleteCustomer(Integer[] ids) {
-        AssertUtils.isTure(null==ids||ids.length==0,"请选择待删除记录ID！");
+        AssertUtils.isTrue(null==ids||ids.length==0,"请选择待删除记录ID！");
         List<Customer> customerList=new ArrayList<>();
 
         for (Integer id : ids) {
@@ -79,16 +78,16 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             customerList.add(temp);
         }
 
-        AssertUtils.isTure(!(this.updateBatchById(customerList)),"客户记录删除失败");
+        AssertUtils.isTrue(!(this.updateBatchById(customerList)),"客户记录删除失败");
 
     }
 
 
     private void checkParams(String name, String contact, String number) {
 
-        AssertUtils.isTure(StringUtils.isBlank(name),"请输入客户名称！");
-        AssertUtils.isTure(StringUtils.isBlank(contact),"请输入客户联系人！");
-        AssertUtils.isTure(StringUtils.isBlank(number),"请输入客户联系电话！");
+        AssertUtils.isTrue(StringUtils.isBlank(name),"请输入客户名称！");
+        AssertUtils.isTrue(StringUtils.isBlank(contact),"请输入客户联系人！");
+        AssertUtils.isTrue(StringUtils.isBlank(number),"请输入客户联系电话！");
 
     }
 

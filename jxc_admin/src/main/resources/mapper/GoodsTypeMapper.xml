@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.admin.mapper.GoodsTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.example.admin.pojo.GoodsType">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="p_id" property="pId" />
+        <result column="state" property="state" />
+        <result column="icon" property="icon" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, p_id, state, icon
+    </sql>
+    <select id="queryAllGoodsTypes" resultType="org.example.admin.dto.TreeDto">
+        select id,name ,p_id as pId
+        from t_goods_type
+    </select>
+    <select id="countGoods" resultType="java.lang.Integer">
+        select count(type_id) from t_goods where type_id=#{id}
+    </select>
+
+</mapper>

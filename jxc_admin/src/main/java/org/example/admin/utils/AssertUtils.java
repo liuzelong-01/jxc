@@ -5,7 +5,7 @@ import org.example.admin.exceptions.ParamsException;
 public class AssertUtils {
 
 
-    public static void isTure(Boolean flag,String msg){
+    public static void isTrue(Boolean flag, String msg){
         if (flag){
             throw new ParamsException(msg);
         }

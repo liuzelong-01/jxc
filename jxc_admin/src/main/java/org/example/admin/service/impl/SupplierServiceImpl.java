@@ -51,9 +51,9 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void saveSupplier(Supplier supplier) {
         checkParams(supplier.getName(),supplier.getContact(),supplier.getNumber());
-        AssertUtils.isTure(null!=this.findSupplierByName(supplier.getName()),"供应商已存在！");
+        AssertUtils.isTrue(null!=this.findSupplierByName(supplier.getName()),"供应商已存在！");
         supplier.setIsDel(0);
-        AssertUtils.isTure(!(this.save(supplier)),"供应商记录添加失败！");
+        AssertUtils.isTrue(!(this.save(supplier)),"供应商记录添加失败！");
 
     }
 
@@ -61,9 +61,9 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
 
     private void checkParams(String name, String contact, String number) {
 
-        AssertUtils.isTure(StringUtils.isBlank(name),"请输入供应商名称！");
-        AssertUtils.isTure(StringUtils.isBlank(contact),"请输入供应商联系人！");
-        AssertUtils.isTure(StringUtils.isBlank(number),"请输入供应商联系电话！");
+        AssertUtils.isTrue(StringUtils.isBlank(name),"请输入供应商名称！");
+        AssertUtils.isTrue(StringUtils.isBlank(contact),"请输入供应商联系人！");
+        AssertUtils.isTrue(StringUtils.isBlank(number),"请输入供应商联系电话！");
 
     }
 
@@ -71,11 +71,11 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
     @Override
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void updateSupplier(Supplier supplier) {
-        AssertUtils.isTure(null==this.getById(supplier.getId()),"请选择供应商记录！");
+        AssertUtils.isTrue(null==this.getById(supplier.getId()),"请选择供应商记录！");
         checkParams(supplier.getName(),supplier.getContact(),supplier.getNumber());
         Supplier temp=this.findSupplierByName(supplier.getName());
-        AssertUtils.isTure(null!=temp&&!(temp.getId().equals(supplier.getId())),"供应商已存在！");
-        AssertUtils.isTure(!(this.updateById(supplier)),"供应商记录更新失败！");
+        AssertUtils.isTrue(null!=temp&&!(temp.getId().equals(supplier.getId())),"供应商已存在！");
+        AssertUtils.isTrue(!(this.updateById(supplier)),"供应商记录更新失败！");
 
 
     }
@@ -83,7 +83,7 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
     @Override
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void deleteSupplier(Integer[] ids) {
-        AssertUtils.isTure(null==ids||ids.length==0,"请选择待删除记录ID！");
+        AssertUtils.isTrue(null==ids||ids.length==0,"请选择待删除记录ID！");
         List<Supplier> supplierList=new ArrayList<>();
 
         for (Integer id : ids) {
@@ -92,7 +92,7 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
             supplierList.add(temp);
         }
 
-        AssertUtils.isTure(!(this.updateBatchById(supplierList)),"供应商记录删除失败");
+        AssertUtils.isTrue(!(this.updateBatchById(supplierList)),"供应商记录删除失败");
     }
 
 }

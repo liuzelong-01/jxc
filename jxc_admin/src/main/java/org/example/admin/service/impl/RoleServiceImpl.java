@@ -7,9 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.example.admin.pojo.Role;
 import org.example.admin.mapper.RoleMapper;
 import org.example.admin.pojo.RoleMenu;
-import org.example.admin.pojo.User;
 import org.example.admin.query.RoleQuery;
-import org.example.admin.query.UserQuery;
 import org.example.admin.service.IRoleMenuService;
 import org.example.admin.service.IRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -21,7 +19,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,20 +52,20 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Override
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void saveRole(Role role) {
-        AssertUtils.isTure(StringUtils.isBlank(role.getName()),"请输入角色名！");
-        AssertUtils.isTure(null!=this.findRoleByRoleName(role.getName()),"角色名已存在！");
+        AssertUtils.isTrue(StringUtils.isBlank(role.getName()),"请输入角色名！");
+        AssertUtils.isTrue(null!=this.findRoleByRoleName(role.getName()),"角色名已存在！");
         role.setIsDel(0);
-        AssertUtils.isTure(!(this.save(role)),"角色添加失败！");
+        AssertUtils.isTrue(!(this.save(role)),"角色添加失败！");
 
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void updateRole(Role role) {
-        AssertUtils.isTure(StringUtils.isBlank(role.getName()),"请输入角色名！");
+        AssertUtils.isTrue(StringUtils.isBlank(role.getName()),"请输入角色名！");
         Role temp=this.findRoleByRoleName(role.getName());
-        AssertUtils.isTure(null!=temp&&!(temp.getId().equals(role.getId())),"角色名已存在！");
-        AssertUtils.isTure(!(this.updateById(role)),"角色更新失败！");
+        AssertUtils.isTrue(null!=temp&&!(temp.getId().equals(role.getId())),"角色名已存在！");
+        AssertUtils.isTrue(!(this.updateById(role)),"角色更新失败！");
     }
 
     @Override
@@ -79,11 +76,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Override
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void deleteRole(Integer id) {
-        AssertUtils.isTure(null==id,"请选择待删除记录！");
+        AssertUtils.isTrue(null==id,"请选择待删除记录！");
         Role role=this.getById(id);
-        AssertUtils.isTure(null==role,"待删除记录不存在！");
+        AssertUtils.isTrue(null==role,"待删除记录不存在！");
         role.setIsDel(1);
-        AssertUtils.isTure(!(this.updateById(role)),"角色记录删除失败！");
+        AssertUtils.isTrue(!(this.updateById(role)),"角色记录删除失败！");
     }
 
     @Override
@@ -95,10 +92,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void addGrant(Integer roleId, Integer[] mids) {
         Role role=this.getById(roleId);
-        AssertUtils.isTure(null==role,"待授权角色记录不存在！");
+        AssertUtils.isTrue(null==role,"待授权角色记录不存在！");
         int count = (int) roleMenuService.count(new QueryWrapper<RoleMenu>().eq("role_id",roleId));
         if (count>0){
-           AssertUtils.isTure(!( roleMenuService.remove(new QueryWrapper<RoleMenu>().eq("role_id",roleId))),"角色授权失败！");
+           AssertUtils.isTrue(!( roleMenuService.remove(new QueryWrapper<RoleMenu>().eq("role_id",roleId))),"角色授权失败！");
         }
         if(null!=mids&&mids.length>0){
             List<RoleMenu> roleMenus=new ArrayList<>();
@@ -109,7 +106,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
                 roleMenus.add(roleMenu);
             }
 
-            AssertUtils.isTure(!(roleMenuService.saveBatch(roleMenus)),"角色授权失败！");
+            AssertUtils.isTrue(!(roleMenuService.saveBatch(roleMenus)),"角色授权失败！");
         }
 
     }

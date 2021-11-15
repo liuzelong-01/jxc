@@ -78,51 +78,51 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Override
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void saveMenu(Menu menu) {
-        AssertUtils.isTure(StringUtils.isBlank(menu.getName()),"请输入菜单名！");
+        AssertUtils.isTrue(StringUtils.isBlank(menu.getName()),"请输入菜单名！");
         Integer grade=menu.getGrade();
-        AssertUtils.isTure(null==grade||!(grade==0||grade==1||grade==2),"菜单层级不合法！");
-        AssertUtils.isTure(null!=this.findMenuByNameAndGrade(menu.getName(),menu.getGrade()),"该层级下菜单已存在！");
-        AssertUtils.isTure(null!=this.findMenuByAclValue(menu.getAclValue()),"权限码不能重复！");
-        AssertUtils.isTure(null==menu.getPId()||null==this.findMenuById(menu.getPId()),"请指定上级菜单！");
+        AssertUtils.isTrue(null==grade||!(grade==0||grade==1||grade==2),"菜单层级不合法！");
+        AssertUtils.isTrue(null!=this.findMenuByNameAndGrade(menu.getName(),menu.getGrade()),"该层级下菜单已存在！");
+        AssertUtils.isTrue(null!=this.findMenuByAclValue(menu.getAclValue()),"权限码不能重复！");
+        AssertUtils.isTrue(null==menu.getPId()||null==this.findMenuById(menu.getPId()),"请指定上级菜单！");
         if (grade == 1) {
-            AssertUtils.isTure(null!=this.findMenuByGradeAndUrl(menu.getUrl(),menu.getGrade()),"该层级下URL不可重复！");
+            AssertUtils.isTrue(null!=this.findMenuByGradeAndUrl(menu.getUrl(),menu.getGrade()),"该层级下URL不可重复！");
         }
         menu.setIsDel(0);
         menu.setState(0);
-        AssertUtils.isTure(!(this.save(menu)),"菜单添加失败！");
+        AssertUtils.isTrue(!(this.save(menu)),"菜单添加失败！");
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void updateMenu(Menu menu) {
-        AssertUtils.isTure(null==menu.getId()||null==this.findMenuById(menu.getId()),"待更新的记录不存在！");
-        AssertUtils.isTure(StringUtils.isBlank(menu.getName()),"菜单名不能为空！");
+        AssertUtils.isTrue(null==menu.getId()||null==this.findMenuById(menu.getId()),"待更新的记录不存在！");
+        AssertUtils.isTrue(StringUtils.isBlank(menu.getName()),"菜单名不能为空！");
         Integer grade=menu.getGrade();
-        AssertUtils.isTure(null==grade||!(grade==0||grade==1||grade==2),"菜单层级不合法！");
+        AssertUtils.isTrue(null==grade||!(grade==0||grade==1||grade==2),"菜单层级不合法！");
         Menu temp =this.findMenuByNameAndGrade(menu.getName(),menu.getGrade());
-        AssertUtils.isTure(null!=temp&&!(temp.getId().equals(menu.getId())),"该层级下菜单已存在！");
+        AssertUtils.isTrue(null!=temp&&!(temp.getId().equals(menu.getId())),"该层级下菜单已存在！");
         temp=this.findMenuByAclValue(menu.getAclValue());
-        AssertUtils.isTure(null!=temp&&!(temp.getId().equals(menu.getId())),"权限码已存在！");
-        AssertUtils.isTure(null==menu.getPId()||null==this.findMenuById(menu.getPId()),"请指定上级菜单！");
+        AssertUtils.isTrue(null!=temp&&!(temp.getId().equals(menu.getId())),"权限码已存在！");
+        AssertUtils.isTrue(null==menu.getPId()||null==this.findMenuById(menu.getPId()),"请指定上级菜单！");
         if (grade == 1) {
             temp=this.findMenuByGradeAndUrl(menu.getUrl(),menu.getGrade());
-            AssertUtils.isTure(null!=temp&&!(temp.getId().equals(menu.getId())),"该层级下URL不可重复！");
+            AssertUtils.isTrue(null!=temp&&!(temp.getId().equals(menu.getId())),"该层级下URL不可重复！");
         }
-        AssertUtils.isTure(!(this.updateById(menu)),"菜单记录更新失败！");
+        AssertUtils.isTrue(!(this.updateById(menu)),"菜单记录更新失败！");
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void deleteMenuById(Integer id) {
         Menu menu=this.findMenuById(id);
-        AssertUtils.isTure(null==id||null==menu,"待删除的记录不存在！");
+        AssertUtils.isTrue(null==id||null==menu,"待删除的记录不存在！");
         int count= (int) this.count(new QueryWrapper<Menu>().eq("is_del",0).eq("p_id",id));
-        AssertUtils.isTure(count>0,"存在子菜单，不允许直接删除！");
+        AssertUtils.isTrue(count>0,"存在子菜单，不允许直接删除！");
         count= (int) roleMenuService.count(new QueryWrapper<RoleMenu>().eq("menu_id",id));
         if (count>0){
-            AssertUtils.isTure(!(roleMenuService.remove(new QueryWrapper<RoleMenu>().eq("menu_id",id))),"菜单删除失败！");
+            AssertUtils.isTrue(!(roleMenuService.remove(new QueryWrapper<RoleMenu>().eq("menu_id",id))),"菜单删除失败！");
         }
         menu.setIsDel(1);
-        AssertUtils.isTure(!(this.updateById(menu)),"菜单删除失败！");
+        AssertUtils.isTrue(!(this.updateById(menu)),"菜单删除失败！");
     }
 }
