@@ -41,6 +41,12 @@
                 <if test="goodsQuery.type ==2 ">
                     and inventory_quantity  &gt; 0
                 </if>
+                <if test="goodsQuery.type ==3 ">
+
+                </if>
+                <if test="goodsQuery.type ==4 ">
+                    and inventory_quantity &lt;= min_num*1.2
+                </if>
             </if>
             <if test="null != goodsQuery.typeIds and goodsQuery.typeIds.size>0">
                 and g.type_id in

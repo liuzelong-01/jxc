@@ -94,13 +94,13 @@
                             </dd>
 
                             <dd class="">
-                                <a href="javascript:;" class="layui-menu-tips" data-type="tabAdd" data-tab-mpi="m-p-i-12" data-tab="overflow/index" target="_self"><i class="fa fa-tachometer"></i><span class="layui-left-nav"> 商品报溢</span></a>
+                                <a href="javascript:;" class="layui-menu-tips" data-type="tabAdd" data-tab-mpi="m-p-i-12" data-tab="damage/damageSearchPage" target="_self"><i class="fa fa-tachometer"></i><span class="layui-left-nav"> 报损查询</span></a>
                             </dd>
                             <dd class="">
                                 <a href="javascript:;" class="layui-menu-tips" data-type="tabAdd" data-tab-mpi="m-p-i-13" data-tab="common/alarmPage" target="_self"><i class="fa fa-tachometer"></i><span class="layui-left-nav"> 库存报警</span></a>
                             </dd>
                             <dd class="">
-                                <a href="javascript:;" class="layui-menu-tips" data-type="tabAdd" data-tab-mpi="m-p-i-13" data-tab="common/toDamageOverflowSearchPage" target="_self"><i class="fa fa-tachometer"></i><span class="layui-left-nav"> 报损报溢查询</span></a>
+                                <a href="javascript:;" class="layui-menu-tips" data-type="tabAdd" data-tab-mpi="m-p-i-13" data-tab="damage/toDamageSearchPage" target="_self"><i class="fa fa-tachometer"></i><span class="layui-left-nav"> 报损审批</span></a>
                             </dd>
                             <dd class="">
                                 <a href="javascript:;" class="layui-menu-tips" data-type="tabAdd" data-tab-mpi="m-p-i-13" data-tab="common/toGoodsStockPage" target="_self"><i class="fa fa-tachometer"></i><span class="layui-left-nav"> 当前库存查询</span></a>

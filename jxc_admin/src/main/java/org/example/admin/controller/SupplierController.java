@@ -2,6 +2,7 @@ package org.example.admin.controller;
 
 
 import org.example.admin.model.RespBean;
+import org.example.admin.pojo.GoodsUnit;
 import org.example.admin.pojo.Supplier;
 import org.example.admin.query.SupplierQuery;
 import org.example.admin.query.UserQuery;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,6 +43,12 @@ public class SupplierController {
     @ResponseBody
     public Map<String,Object> supplierList(SupplierQuery supplierQuery){
         return supplierService.supplierList(supplierQuery);
+    }
+
+    @RequestMapping("allSuppliers")
+    @ResponseBody
+    public List<Supplier> allSuppliers(){
+        return supplierService.list();
     }
 
     @RequestMapping("addOrUpdateSupplierPage")

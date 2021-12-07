@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.admin.mapper.DamageListMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.example.admin.pojo.DamageList">
+        <id column="id" property="id" />
+        <result column="damage_date" property="damageDate" />
+        <result column="damage_number" property="damageNumber" />
+        <result column="remarks" property="remarks" />
+        <result column="user_id" property="userId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, damage_date, damage_number, remarks, user_id
+    </sql>
+    <resultMap id="qdlbp" type="org.example.admin.pojo.DamageListGoods">
+        <result property="id" column="id" />
+        <result property="code" column="code"/>
+        <result property="model" column="model"/>
+        <result property="name" column="name"/>
+        <result property="num" column="num"/>
+        <result property="price" column="price"/>
+        <result property="total" column="total"/>
+        <result property="typeId" column="type_id"/>
+        <result property="unit" column="unit"/>
+        <result property="goodsId" column="goods_id"/>
+        <result property="userName" column="userName"/>
+        <association property="damageList" javaType="damageList">
+            <result property="id" column="id"/>
+            <result property="damageDate" column="damage_date"/>
+            <result property="remarks" column="remarks"/>
+            <result property="damageNumber" column="damage_number"/>
+            <result property="userId" column="user_id"/>
+        </association>
+    </resultMap>
+
+
+    <select id="queryDamageListByparams" resultMap="qdlbp">
+        select tdl.*,tdlg.*,tu.user_name userName
+        from t_damage_list tdl right join t_damage_list_goods tdlg on tdl.id = tdlg.damage_list_id
+        left join t_user tu on tdl.user_id = tu.id
+        where tdl.remarks='0'
+    </select>
+    <select id="queryDamageAllListByparams" resultMap="qdlbp">
+        select tdl.*,tdlg.*,tu.user_name userName
+        from t_damage_list tdl right join t_damage_list_goods tdlg on tdl.id = tdlg.damage_list_id
+                               left join t_user tu on tdl.user_id = tu.id
+    </select>
+</mapper>

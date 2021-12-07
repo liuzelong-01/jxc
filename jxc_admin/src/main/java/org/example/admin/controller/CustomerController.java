@@ -3,6 +3,7 @@ package org.example.admin.controller;
 
 import org.example.admin.model.RespBean;
 import org.example.admin.pojo.Customer;
+import org.example.admin.pojo.Supplier;
 import org.example.admin.query.CustomerQuery;
 import org.example.admin.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,6 +41,12 @@ public class CustomerController {
     @ResponseBody
     public Map<String,Object> customerList(CustomerQuery customerQuery){
         return customerService.customerList(customerQuery);
+    }
+
+    @RequestMapping("allCustomer")
+    @ResponseBody
+    public List<Customer> allCustomer(){
+        return customerService.list();
     }
 
     @RequestMapping("addOrUpdateCustomerPage")

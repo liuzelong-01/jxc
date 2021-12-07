@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.admin.mapper.ReturnListMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.example.admin.pojo.ReturnList">
+        <id column="id" property="id" />
+        <result column="amount_paid" property="amountPaid" />
+        <result column="amount_payable" property="amountPayable" />
+        <result column="remarks" property="remarks" />
+        <result column="return_date" property="returnDate" />
+        <result column="return_number" property="returnNumber" />
+        <result column="state" property="state" />
+        <result column="supplier_id" property="supplierId" />
+        <result column="user_id" property="userId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, amount_paid, amount_payable, remarks, return_date, return_number, state, supplier_id, user_id
+    </sql>
+    <resultMap id="qrlbp" type="org.example.admin.pojo.ReturnListGoods">
+        <result property="id" column="id" />
+        <result property="code" column="code"/>
+        <result property="model" column="model"/>
+        <result property="name" column="name"/>
+        <result property="num" column="num"/>
+        <result property="price" column="price"/>
+        <result property="total" column="total"/>
+        <result property="typeId" column="type_id"/>
+        <result property="unit" column="unit"/>
+        <result property="goodsId" column="goods_id"/>
+        <result property="supplierName" column="supplierName"/>
+        <result property="userName" column="userName"/>
+        <association property="returnList" javaType="returnList">
+            <result property="id" column="id"/>
+            <result property="amountPaid" column="amount_paid"/>
+            <result property="amountPayable" column="amount_payable"/>
+            <result property="returnDate" column="return_date"/>
+            <result property="remarks" column="remarks"/>
+            <result property="state" column="state"/>
+            <result property="returnNumber" column="return_number"/>
+            <result property="supplierId" column="supplier_id"/>
+            <result property="userId" column="user_id"/>
+        </association>
+    </resultMap>
+    <select id="queryReturnListByparams" resultMap="qrlbp">
+        select trlg.*,trl.*,ts.name supplierName,tu.user_name userName
+        from  t_return_list trl right join t_return_list_goods trlg  on trlg.return_list_id = trl.id
+                                  left join t_supplier ts on trl.supplier_id = ts.id
+                                  left join t_user tu on trl.user_id = tu.id
+    </select>
+
+</mapper>

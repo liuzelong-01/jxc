@@ -38,6 +38,20 @@ public class StockController {
         return goodsService.goodsList(goodsQuery);
     }
 
+    @RequestMapping("listAllInventoryQuantity")
+    @ResponseBody
+    public Map<String,Object> listAllInventoryQuantity(GoodsQuery goodsQuery){
+        goodsQuery.setType(3);
+        return goodsService.goodsList(goodsQuery);
+    }
+
+    @RequestMapping("listAlarmInventoryQuantity")
+    @ResponseBody
+    public Map<String,Object> listAlarmInventoryQuantity(GoodsQuery goodsQuery){
+        goodsQuery.setType(4);
+        return goodsService.goodsList(goodsQuery);
+    }
+
     @RequestMapping("toUpdateGoodsInfoPage")
     public String toUpdateGoodsInfoPage(Integer gid, Model model){
         model.addAttribute("goods",goodsService.getById(gid));

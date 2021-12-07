@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.admin.mapper.PurchaseListMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.example.admin.pojo.PurchaseList">
+        <id column="id" property="id" />
+        <result column="amount_paid" property="amountPaid" />
+        <result column="amount_payable" property="amountPayable" />
+        <result column="purchase_date" property="purchaseDate" />
+        <result column="remarks" property="remarks" />
+        <result column="state" property="state" />
+        <result column="purchase_number" property="purchaseNumber" />
+        <result column="supplier_id" property="supplierId" />
+        <result column="user_id" property="userId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, amount_paid, amount_payable, purchase_date, remarks, state, purchase_number, supplier_id, user_id
+    </sql>
+    <resultMap id="qplbp" type="org.example.admin.pojo.PurchaseListGoods">
+        <result property="id" column="id" />
+        <result property="code" column="code"/>
+        <result property="model" column="model"/>
+        <result property="name" column="name"/>
+        <result property="num" column="num"/>
+        <result property="price" column="price"/>
+        <result property="total" column="total"/>
+        <result property="typeId" column="type_id"/>
+        <result property="unit" column="unit"/>
+        <result property="goodsId" column="goods_id"/>
+        <result property="supplierName" column="supplierName"/>
+        <result property="userName" column="userName"/>
+        <association property="purchaseList" javaType="purchaseList">
+            <result property="id" column="id"/>
+            <result property="amountPaid" column="amount_paid"/>
+            <result property="amountPayable" column="amount_payable"/>
+            <result property="purchaseDate" column="purchase_date"/>
+            <result property="remarks" column="remarks"/>
+            <result property="state" column="state"/>
+            <result property="purchaseNumber" column="purchase_number"/>
+            <result property="supplierId" column="supplier_id"/>
+            <result property="userId" column="user_id"/>
+        </association>
+    </resultMap>
+    <select id="queryPurchaseListByparams" resultMap="qplbp">
+        select tplg.*,tpl.*,ts.name supplierName,tu.user_name userName
+        from  t_purchase_list tpl right join t_purchase_list_goods tplg  on tplg.purchase_list_id = tpl.id
+        left join t_supplier ts on tpl.supplier_id = ts.id
+        left join t_user tu on tpl.user_id = tu.id
+    </select>
+
+</mapper>
