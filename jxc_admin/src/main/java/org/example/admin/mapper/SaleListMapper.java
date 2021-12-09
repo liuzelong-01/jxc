@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.example.admin.pojo.SaleListGoods;
 import org.example.admin.query.SaleQuery;
 
+import java.util.List;
+
 /**
  * <p>
  * 销售单表 Mapper 接口
@@ -16,4 +18,12 @@ import org.example.admin.query.SaleQuery;
  */
 public interface SaleListMapper extends BaseMapper<SaleList> {
     IPage<SaleListGoods> querySaleListByparams(IPage<SaleListGoods> page, SaleQuery saleQuery);
+
+    List<String> selectCustomerName();
+
+    Float selectCustomerMoneySum(String x);
+
+    List<String> selectSaleMonth();
+
+    List<Float> selectSaleMonthPay();
 }

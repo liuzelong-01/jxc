@@ -11,6 +11,7 @@ import org.example.admin.query.GoodsQuery;
 import org.example.admin.query.PurchaseQuery;
 import org.example.admin.service.*;
 import org.example.admin.utils.AssertUtils;
+import org.example.admin.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,6 +75,19 @@ public class PurchaseListController {
     @RequestMapping("updateStock")
     @ResponseBody
     public RespBean updateStock(Integer goodsId,Integer num, PurchaseList purchaseList, PurchaseListGoods purchaseListGoods){
+        if (num<=0||"".equals(num)||null==num){
+            return RespBean.error("请输入正确的数量！");
+        }
+        if (null==purchaseList.getPurchaseNumber()|| StringUtils.isEmpty(purchaseList.getPurchaseNumber())){
+            return RespBean.error("请输入采购号！");
+        }
+        if (purchaseList.getSupplierId().equals(0)||"".equals(purchaseList.getSupplierId())){
+            return RespBean.error("请选择供应商！");
+        }
+        if (null==purchaseList.getAmountPaid()||"".equals(purchaseList.getAmountPaid())){
+            return RespBean.error("请点击应付款！");
+        }
+
         //第一张表的添加
 
         purchaseList.setPurchaseDate(LocalDateTime.now());

@@ -21,6 +21,7 @@
                         <#--操作-->
                         <script id="goodsListBar02" type="text/html">
                             <a class="layui-btn layui-btn-xs" id="edit" lay-event="edit">审批</a>
+                            <a class="layui-btn layui-btn-xs" id="deleteList" lay-event="deleteList">删除</a>
                         </script>
                     </form>
 

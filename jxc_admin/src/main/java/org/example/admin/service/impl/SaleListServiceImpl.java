@@ -12,6 +12,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.admin.utils.PageResultUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,5 +32,25 @@ public class SaleListServiceImpl extends ServiceImpl<SaleListMapper, SaleList> i
         IPage<SaleListGoods> page=new Page<>(saleQuery.getPage(),saleQuery.getLimit());
         page=this.baseMapper.querySaleListByparams(page,saleQuery);
         return PageResultUtil.getResult(page.getTotal(),page.getRecords());
+    }
+
+    @Override
+    public List<String> getCustomerName() {
+        return this.baseMapper.selectCustomerName();
+    }
+
+    @Override
+    public Float getCustomerMoneySum(String x) {
+        return this.baseMapper.selectCustomerMoneySum(x);
+    }
+
+    @Override
+    public List<String> getSaleMonth() {
+        return this.baseMapper.selectSaleMonth();
+    }
+
+    @Override
+    public List<Float> getSaleMonthPay() {
+        return this.baseMapper.selectSaleMonthPay();
     }
 }

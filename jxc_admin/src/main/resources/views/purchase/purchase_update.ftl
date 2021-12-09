@@ -43,7 +43,7 @@
             <label class="layui-form-label">成本价</label>
             <div class="layui-input-block">
                 <input type="text" class="layui-input purchasingPrice"
-                       name="price" id="price"  value="${(goods.purchasingPrice)!}">
+                     readonly="readonly"  name="price" id="price"  value="${(goods.purchasingPrice)!}">
             </div>
         </div>
     </div>
@@ -70,14 +70,14 @@
               <label class="layui-form-label">应付款</label>
               <div class="layui-input-block">
                   <input type="text" class="layui-input sellingPrice"
-                        readonly="readonly"  name="amountPaid" id="amountPaid" onblur="count()" >
+                        readonly="readonly"  name="amountPaid" id="amountPaid"  >
               </div>
          </div>
          <div class="layui-col-xs6">
              <label class="layui-form-label">能付金额</label>
              <div class="layui-input-block">
                  <input type="text" class="layui-input purchasingPrice"
-                        name="amountPayable" id="amountPayable"  onblur="count()" >
+                        name="amountPayable" id="amountPayable"  >
              </div>
          </div>
     </div>
@@ -108,7 +108,7 @@
             <div class="layui-input-block">
                 <input type="text" class="layui-input inventoryQuantity"
                        name="num" id="num"  lay-verify="required" placeholder="请输入进货数量"
-                       value="${(goods.minNum-goods.inventoryQuantity)!}">
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="count()">
             </div>
         </div>
         <div class="layui-col-xs6">

@@ -11,6 +11,7 @@ import org.example.admin.service.IGoodsUnitService;
 import org.example.admin.service.IReturnListGoodsService;
 import org.example.admin.service.IReturnListService;
 import org.example.admin.utils.AssertUtils;
+import org.example.admin.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,6 +72,20 @@ public class ReturnListController {
     @RequestMapping("updateStock")
     @ResponseBody
     public RespBean updateStock(Integer goodsId, Integer num, ReturnList returnList, ReturnListGoods returnListGoods){
+
+        if (num<=0||"".equals(num)||null==num){
+            return RespBean.error("请输入正确的数量！");
+        }
+        if (null==returnList.getReturnNumber()|| StringUtils.isEmpty(returnList.getReturnNumber())){
+            return RespBean.error("请输入退货号！");
+        }
+        if (returnList.getSupplierId().equals(0)||"".equals(returnList.getSupplierId())){
+            return RespBean.error("请选择供应商！");
+        }
+        if (null==returnList.getAmountPaid()||"".equals(returnList.getAmountPaid())){
+            return RespBean.error("请点击应付款！");
+        }
+
         //第一张表的添加
 
         returnList.setReturnDate(LocalDateTime.now());

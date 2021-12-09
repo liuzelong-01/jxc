@@ -51,4 +51,32 @@
                             left join t_customer tc on tsl.customer_id = tc.id
                             left join t_user tu on tsl.user_id = tu.id
     </select>
+    <select id="selectCustomerName" resultType="java.lang.String">
+        select tc.name
+        from t_sale_list tsl left join t_customer tc on tsl.customer_id = tc.id
+        group by customer_id
+    </select>
+    <select id="selectCustomerMoneySum" resultType="java.lang.Float">
+        select tsl.amount_payable
+        from t_customer tc
+            right join  t_sale_list tsl on tsl.customer_id = tc.id
+           where tc.name=#{x}
+        group by customer_id
+    </select>
+    <select id="selectSaleMonth" resultType="java.lang.String">
+        select uc.calendar_date date
+        from util_calendar uc
+                 left join  t_sale_list tsl
+                            on uc.calendar_date=DATE_FORMAT(tsl.sale_date,'%Y-%m-%d')
+        where DATE_FORMAT(calendar_date,'%Y-%m')=DATE_FORMAT(CURDATE(),'%Y-%m')
+        group by DATE_FORMAT(uc.calendar_date,'%Y-%m-%d')
+    </select>
+    <select id="selectSaleMonthPay" resultType="java.lang.Float">
+        select COALESCE(SUM(amount_payable),0)
+        from util_calendar uc
+                 left join  t_sale_list tsl
+                            on uc.calendar_date=DATE_FORMAT(tsl.sale_date,'%Y-%m-%d')
+        where DATE_FORMAT(calendar_date,'%Y-%m')=DATE_FORMAT(CURDATE(),'%Y-%m')
+        group by DATE_FORMAT(uc.calendar_date,'%Y-%m-%d')
+    </select>
 </mapper>

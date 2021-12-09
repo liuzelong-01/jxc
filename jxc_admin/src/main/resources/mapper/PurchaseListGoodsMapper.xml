@@ -21,6 +21,15 @@
     <sql id="Base_Column_List">
         id, code, model, name, num, price, total, unit, purchase_list_id, type_id, goods_id
     </sql>
+    <select id="selectGoodsName" resultType="java.lang.String">
+        select name from t_purchase_list_goods group by goods_id
+    </select>
+    <select id="selectGoodsNum" resultType="java.lang.Float">
+        select sum(num) from t_purchase_list_goods where name=#{x} group by name
+    </select>
+    <select id="selectGoodsMoney" resultType="java.lang.Float">
+        select sum(total) from t_purchase_list_goods where name=#{x} group by name
+    </select>
 
 
 </mapper>

@@ -10,12 +10,26 @@ layui.use(['element','table','layer'],function(){
         if (layEvent === "edit") {
             openUpdateGoodsInfoDialog(obj.data.id);
         }
+        if (layEvent === "deleteList") {
+            deleteList(obj.data.id);
+        }
     })
 
     function  openUpdateGoodsInfoDialog(did){
         var url  =  ctx+"/damage/toUpdateDamageInfoPage?did="+did;
         layui.layer.open({
             title : "审批单",
+            type : 2,
+            area:["600px","400px"],
+            maxmin:true,
+            content : url
+        });
+    }
+
+    function  deleteList(did){
+        var url  =  ctx+"/damage/toDeleteDamageList?did="+did;
+        layui.layer.open({
+            title : "是否删除报损单",
             type : 2,
             area:["600px","400px"],
             maxmin:true,

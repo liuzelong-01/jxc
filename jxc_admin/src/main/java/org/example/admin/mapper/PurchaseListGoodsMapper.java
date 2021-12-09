@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.example.admin.pojo.PurchaseListGoods;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 进货单商品表 Mapper 接口
@@ -16,4 +18,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface PurchaseListGoodsMapper extends BaseMapper<PurchaseListGoods> {
 
 
+    List<String> selectGoodsName();
+
+    Float selectGoodsNum(String x);
+
+    Float selectGoodsMoney(String x);
 }

@@ -11,6 +11,7 @@ import org.example.admin.service.ICustomerReturnListService;
 import org.example.admin.service.IGoodsService;
 import org.example.admin.service.IGoodsUnitService;
 import org.example.admin.utils.AssertUtils;
+import org.example.admin.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,7 +75,21 @@ public class CustomerReturnListController {
 
     @RequestMapping("updateStock")
     @ResponseBody
-    public RespBean updateStock(Integer goodsId, CustomerReturnList customerReturnList, CustomerReturnListGoods customerReturnListGoods){
+    public RespBean updateStock(Integer goodsId,Integer num, CustomerReturnList customerReturnList, CustomerReturnListGoods customerReturnListGoods){
+        if (num<=0||"".equals(num)||null==num){
+            return RespBean.error("请输入正确的数量！");
+        }
+        if (null==customerReturnList.getCustomerReturnNumber()|| StringUtils.isEmpty(customerReturnList.getCustomerReturnNumber())){
+            return RespBean.error("请输入退货号！");
+        }
+        if (customerReturnList.getCustomerId().equals(0)||"".equals(customerReturnList.getCustomerId())){
+            return RespBean.error("请选择退货人！");
+        }
+        if (null==customerReturnList.getAmountPaid()||"".equals(customerReturnList.getAmountPaid())){
+            return RespBean.error("请点击应退款！");
+        }
+
+
         //第一张表的添加
 
         customerReturnList.setCustomerReturnDate(LocalDateTime.now());

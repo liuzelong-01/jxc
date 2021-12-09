@@ -7,6 +7,7 @@ import org.example.admin.pojo.*;
 import org.example.admin.query.ReturnQuery;
 import org.example.admin.service.*;
 import org.example.admin.utils.AssertUtils;
+import org.example.admin.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +57,7 @@ public class DamageListController {
         return "damage/damage_update";
     }
 
+
     @RequestMapping("toDamageSearchPage")
     public String searchPage(){
         return "damage/searchPage";
@@ -76,7 +78,6 @@ public class DamageListController {
     @RequestMapping("damageAllList")
     @ResponseBody
     public Map<String,Object> damageAllList(ReturnQuery returnQuery){
-        System.out.println(damageListService.returnAllList(returnQuery));
         return damageListService.returnAllList(returnQuery);
     }
 
@@ -93,10 +94,27 @@ public class DamageListController {
         return "damage/damageStock_update";
     }
 
+    @RequestMapping("toDeleteDamageList")
+    public String toDeleteDamageList(Integer did, Model model){
+        DamageList damageList=damageListService.getById(did);
+        DamageListGoods damageListGoods=damageListGoodsService.getOne(new QueryWrapper<DamageListGoods>().eq("damage_list_id",did));
+        model.addAttribute("damageList",damageList);
+        model.addAttribute("damageListGoods",damageListGoods);
+        User user=userService.getOne(new QueryWrapper<User>().eq("id",damageList.getUserId()));
+        model.addAttribute("userName",user);
+        return "damage/damageStock_delete";
+    }
+
 
     @RequestMapping("updateDamage")
     @ResponseBody
-    public RespBean updateStock(Integer goodsId, Integer num, DamageList damageList,DamageListGoods damageListGoods){
+    public RespBean updateStock(DamageList damageList,DamageListGoods damageListGoods){
+        if (null==damageListGoods.getNum()||damageListGoods.getNum()<0){
+            return RespBean.error("请检查报损数量是否正确！");
+        }
+        if (null==damageList.getDamageNumber()|| StringUtils.isEmpty(damageList.getDamageNumber())){
+            return RespBean.error("请填写报损单号！");
+        }
         //第一张表的添加
 
         damageList.setDamageDate(LocalDateTime.now());
@@ -119,6 +137,9 @@ public class DamageListController {
         if (num<0){
             return RespBean.error("审批记录添加失败！报损数量不能小于0！");
         }
+        if (goods.getInventoryQuantity()-num<0){
+            return RespBean.error("审批记录添加失败！报损数量超过库存量！");
+        }
         goods.setInventoryQuantity(goods.getInventoryQuantity() - num);
         AssertUtils.isTrue(!(goodsService.updateById(goods)),"报损记录审批失败！");
         DamageList damageList=damageListService.getById(damageListId);
@@ -127,6 +148,15 @@ public class DamageListController {
         return RespBean.success("商品报损审批成功！");
     }
 
+    @RequestMapping("updateDamageList")
+    @ResponseBody
+    public RespBean updateDamageList(Integer damageListId){
+       DamageListGoods damageListGoods=damageListGoodsService.getOne(new QueryWrapper<DamageListGoods>().eq("damage_list_id",damageListId));
+       AssertUtils.isTrue(!(damageListGoodsService.removeById(damageListGoods)),"报损单删除失败！");
+       DamageList damageList=damageListService.getById(damageListId);
+       AssertUtils.isTrue(!(damageListService.removeById(damageList)),"报损单删除失败！");
+        return RespBean.success("商品报损审批成功！");
+    }
 
 
 

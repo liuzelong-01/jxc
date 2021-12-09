@@ -9,6 +9,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  * 进货单商品表 服务实现类
@@ -20,4 +23,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class PurchaseListGoodsServiceImpl extends ServiceImpl<PurchaseListGoodsMapper, PurchaseListGoods> implements IPurchaseListGoodsService {
 
+    @Override
+    public List<String> getGoodsName() {
+        List<String> nameList=new ArrayList<>();
+        return this.baseMapper.selectGoodsName();
+    }
+
+    @Override
+    public Float getGoodsNum(String x) {
+        return this.baseMapper.selectGoodsNum(x);
+    }
+
+    @Override
+    public Float getGoodsMoney(String x) {
+        return this.baseMapper.selectGoodsMoney(x);
+    }
 }

@@ -47,5 +47,6 @@
         select tdl.*,tdlg.*,tu.user_name userName
         from t_damage_list tdl right join t_damage_list_goods tdlg on tdl.id = tdlg.damage_list_id
                                left join t_user tu on tdl.user_id = tu.id
+        where tdl.remarks='1'
     </select>
 </mapper>
