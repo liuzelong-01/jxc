@@ -40,33 +40,25 @@
                        readonly="readonly" name="model" id="model" value="${(goods.model)!}">
             </div>
         </div>
-        <#--<div class="layui-col-xs6">
-            <label class="layui-form-label">销售价</label>
+        <div class="layui-col-xs6">
+            <label class="layui-form-label">当前库存</label>
             <div class="layui-input-block">
-                <input type="text" class="layui-input purchasingPrice"
-                      readonly="readonly" name="price" id="price"  value="${(goods.sellingPrice)!}">
+                <input type="text" class="layui-input sellingPrice"
+                       readonly="readonly" name="inventoryQuantity" id="inventoryQuantity" value="${(goods.inventoryQuantity)!}">
             </div>
-        </div>-->
+        </div>
     </div>
     <br/>
+
     <div class="layui-row">
-         <div class="layui-col-xs6">
-             <label class="layui-form-label">当前库存</label>
-             <div class="layui-input-block">
-                 <input type="text" class="layui-input sellingPrice"
-                        readonly="readonly" name="inventoryQuantity" id="inventoryQuantity" value="${(goods.inventoryQuantity)!}">
-             </div>
-         </div>
-         <#--<div class="layui-col-xs6">
-              <label class="layui-form-label">最低库存</label>
-              <div class="layui-input-block">
-                  <input type="text" class="layui-input purchasingPrice"
-                         name="minNum" id="minNum" readonly="readonly" value="${(goods.minNum)!}">
-              </div>
-         </div>-->
-    </div>
-    <br/>
-    <div class="layui-row">
+        <div class="layui-col-xs6">
+            <label class="layui-form-label">报损数量</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input inventoryQuantity"
+                       name="num" id="num"  lay-verify="required" placeholder="请输入报损数量"
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="count()">
+            </div>
+        </div>
          <div class="layui-col-xs6">
               <label class="layui-form-label">报损总成本</label>
               <div class="layui-input-block">
@@ -74,24 +66,17 @@
                         readonly="readonly"  name="amountPaid" id="amountPaid"  >
               </div>
          </div>
-         <#--<div class="layui-col-xs6">
-             <label class="layui-form-label">退款</label>
-             <div class="layui-input-block">
-                 <input type="text" class="layui-input purchasingPrice"
-                        name="amountPayable" id="amountPayable"  onblur="count()" >
-             </div>
-         </div>-->
+
     </div>
     <br/>
     <div class="layui-row">
-        <#--<div class="layui-col-xs6">
-            <label class="layui-form-label">退货人</label>
+        <div class="layui-col-xs6">
+            <label class="layui-form-label">报损号</label>
             <div class="layui-input-block">
-                <select id="customerId" name="customerId" lay-verify="required"  class="select">
-                    <option value="0" >请选择</option>
-                </select>
+                <input type="text" class="layui-input purchasingPrice"
+                       name="damageNumber" id="damageNumber" value="" placeholder="BS201710270001">
             </div>
-        </div>-->
+        </div>
         <div class="layui-col-xs6">
                 <label class="layui-form-label">操作人</label>
                 <div class="layui-input-block">
@@ -103,25 +88,7 @@
         </div>
     </fieldset>
     <br/>
-    <div class="layui-row">
-        <div class="layui-col-xs6">
-            <label class="layui-form-label">报损数量</label>
-            <div class="layui-input-block">
-                <input type="text" class="layui-input inventoryQuantity"
-                       name="num" id="num"  lay-verify="required" placeholder="请输入报损数量"
-                       oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="count()">
-            </div>
-        </div>
-        <div class="layui-col-xs6">
-            <label class="layui-form-label">报损号</label>
-            <div class="layui-input-block">
-                <input type="text" class="layui-input purchasingPrice"
-                       name="damageNumber" id="damageNumber" value="" placeholder="BS201710270001">
-            </div>
-        </div>
-    </div>
 
-    <br/>
     <br/>
 
     <div class="layui-form-item layui-row layui-col-xs12">

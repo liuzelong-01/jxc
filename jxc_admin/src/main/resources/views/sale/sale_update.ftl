@@ -56,13 +56,14 @@
                         readonly="readonly" name="inventoryQuantity" id="inventoryQuantity" value="${(goods.inventoryQuantity)!}">
              </div>
          </div>
-         <#--<div class="layui-col-xs6">
-              <label class="layui-form-label">最低库存</label>
-              <div class="layui-input-block">
-                  <input type="text" class="layui-input purchasingPrice"
-                         name="minNum" id="minNum" readonly="readonly" value="${(goods.minNum)!}">
-              </div>
-         </div>-->
+        <div class="layui-col-xs6">
+            <label class="layui-form-label">购买数量</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input inventoryQuantity"
+                       name="num" id="num"  lay-verify="required" placeholder="请输入进货数量"
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="count()">
+            </div>
+        </div>
     </div>
     <br/>
     <div class="layui-row">
@@ -103,14 +104,7 @@
     </fieldset>
     <br/>
     <div class="layui-row">
-        <div class="layui-col-xs6">
-            <label class="layui-form-label">购买数量</label>
-            <div class="layui-input-block">
-                <input type="text" class="layui-input inventoryQuantity"
-                       name="num" id="num"  lay-verify="required" placeholder="请输入进货数量"
-                       oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="count()">
-            </div>
-        </div>
+
         <div class="layui-col-xs6">
             <label class="layui-form-label">销售号</label>
             <div class="layui-input-block">
